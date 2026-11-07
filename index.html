@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Your ZeroHero Plan Guide — everything you need to know about GloBird Energy's ZeroHero battery plan.">
+<title>Your ZeroHero Plan Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;800&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --bg:#fdf6fa; --card:#ffffff; --ink:#2a1622; --muted:#6f5a66; --line:#f0dbe7;
+  --pink:#ec008c; --pink-deep:#b8006d; --pink-soft:#fde3f2;
+  --orange:#fbae47; --orange-soft:#fff1dd; --orange-ink:#8a4f00;
+  --green:#0b7a5e; --green-soft:#e2f4ec;
+  --display:"Rubik",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{min-height:100%;display:flex;flex-direction:column;align-items:center;padding-inline:16px;padding-block:20px 24px}
+.deck{width:100%;max-width:520px;display:flex;flex-direction:column;gap:16px;flex:1}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-family:var(--display);font-weight:800;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--pink)}
+.count{font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
+.progress{height:6px;background:var(--line);border-radius:99px;overflow:hidden}
+.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pink),var(--orange));border-radius:99px;transition:width .35s ease}
+.stage{position:relative;flex:1;display:grid}
+.slide{grid-area:1/1;background:var(--card);border:1px solid var(--line);border-radius:24px;padding:28px 24px;box-shadow:0 10px 30px -18px rgba(184,0,109,.35);display:flex;flex-direction:column;gap:16px;min-width:0}
+.slide[hidden]{display:none!important}
+.slide.enter{animation:in .35s ease both}
+@keyframes in{from{opacity:.001;transform:translateX(var(--dir,24px))}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.slide.enter{animation:none}.progress span{transition:none}}
+.eyebrow{font-family:var(--display);font-weight:700;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--pink)}
+h1,h2,h3{font-family:var(--display);font-weight:800;margin:0;line-height:1.15;text-wrap:balance;color:var(--ink)}
+h1{font-size:clamp(26px,7vw,30px);text-align:center}
+h2{font-size:clamp(24px,7vw,30px)}
+h2 .hl{color:var(--pink)}
+p{margin:0}
+.lead{font-size:17px}
+.small{font-size:14px;color:var(--muted)}
+.center{text-align:center}
+.pill{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;background:var(--orange-soft);color:var(--orange-ink);font-weight:700;font-size:14px;padding:6px 12px;border-radius:99px}
+.pill.pink{background:var(--pink-soft);color:var(--pink-deep)}
+.pill.green{background:var(--green-soft);color:var(--green)}
+.points{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.points li{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start}
+.tick{width:28px;height:28px;border-radius:50%;background:var(--pink-soft);display:grid;place-items:center;margin-top:1px;flex:none}
+.tick svg{width:15px;height:15px}
+.points strong{color:var(--ink)}
+.points .mi{color:var(--muted);font-size:15px}
+.visual{display:flex;justify-content:center;align-items:center;gap:18px;flex-wrap:wrap;padding:4px 0}
+.clock{width:min(150px,44vw);height:auto}
+.timechip{font-family:var(--display);font-weight:800;font-size:20px;color:var(--ink);text-align:center;line-height:1.2}
+.timechip small{display:block;font-family:var(--body);font-weight:600;font-size:13px;color:var(--muted);letter-spacing:.03em;text-transform:uppercase;margin-top:4px}
+.big{font-family:var(--display);font-weight:800;color:var(--pink);font-size:48px;line-height:1}
+.note{font-size:14.5px;line-height:1.45;padding:12px 14px;border-radius:12px;background:var(--orange-soft);border:1.5px solid var(--orange);color:var(--ink)}
+.note strong{color:var(--orange-ink)}
+.note.alt{background:var(--pink-soft);border-color:var(--pink)}
+.note.g{background:var(--green-soft);border-color:var(--green)}
+/* day timeline */
+.day{display:flex;flex-direction:column;gap:10px}
+.slot{display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:start;padding:12px;border-radius:16px;border:1.5px solid var(--line);background:var(--bg)}
+.slot .ico{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;flex:none}
+.slot .ico svg{width:22px;height:22px}
+.slot .when{display:block;font-family:var(--display);font-weight:800;font-size:16px;line-height:1.2}
+.slot .say{display:block;font-weight:700;font-size:13px;letter-spacing:.03em;text-transform:uppercase;margin-top:2px}
+.slot .do{display:block;font-size:14.5px;color:var(--ink);margin-top:4px;line-height:1.4}
+.s-free{border-color:var(--orange)} .s-free .ico{background:var(--orange-soft)} .s-free .say{color:var(--orange-ink)}
+.s-mid{border-color:var(--line)} .s-mid .ico{background:var(--line)} .s-mid .say{color:var(--muted)}
+.s-peak{border-color:var(--pink)} .s-peak .ico{background:var(--pink-soft)} .s-peak .say{color:var(--pink-deep)}
+.s-night{border-color:#c9cde0} .s-night .ico{background:#eef0fa} .s-night .say{color:#444a7a}
+/* choices */
+.choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (max-width:380px){.choices{grid-template-columns:1fr}}
+.choice{appearance:none;cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:4px;padding:14px;border-radius:16px;border:2px solid var(--line);background:var(--card);color:var(--ink);font-family:var(--body);width:100%}
+.choice b{font-family:var(--display);font-weight:700;font-size:16px;line-height:1.2}
+.choice span{font-size:13px;color:var(--muted)}
+.choice.featured{position:relative;border:3px solid var(--pink);padding-right:40px;box-shadow:0 10px 22px -12px rgba(236,0,140,.5)}
+.choice.featured b{color:var(--pink-deep)}
+.rec{align-self:flex-start;font-style:normal;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:var(--pink);padding:3px 8px;border-radius:99px;margin-bottom:2px}
+.choices-stack{grid-template-columns:1fr}
+/* compare table */
+.cmp{background:var(--card);border:1.5px solid var(--line);border-radius:16px;overflow:hidden}
+.cr{display:grid;grid-template-columns:1fr 64px 64px;align-items:center;border-bottom:1px solid var(--line);padding:10px 12px;gap:6px;font-size:14.5px}
+.cr:last-child{border-bottom:0}
+.ch{background:var(--ink);color:#fff;font-size:12.5px;font-weight:800;line-height:1.15;padding:10px 12px}
+.ch .cc{text-align:center}
+.cc{text-align:center;display:flex;justify-content:center}
+.cc svg{width:22px;height:22px}
+.cl small{display:block;font-size:12px;color:var(--muted);line-height:1.25;margin-top:2px}
+.cx{background:var(--pink-soft)}
+/* steps */
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;counter-reset:s}
+.steps li{counter-increment:s;display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:center;padding:12px;border-radius:16px;background:var(--bg);border:1px solid var(--line)}
+.steps li::before{content:counter(s);width:40px;height:40px;border-radius:50%;background:var(--pink);color:#fff;font-family:var(--display);font-weight:800;font-size:18px;display:grid;place-items:center;flex:none}
+.steps b{display:block;font-size:16px}
+.steps span{font-size:13.5px;color:var(--muted)}
+/* schedule */
+.sch-set{background:var(--orange-soft);border-radius:14px;padding:14px 16px;display:grid;gap:8px}
+.sch-h{font-size:12px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--orange-ink)}
+.sch-row{display:grid;grid-template-columns:118px 1fr;gap:10px;align-items:center;font-size:15px}
+.sch-tm{font-weight:800;background:#fff;border-radius:8px;padding:4px 8px;text-align:center;font-size:13.5px}
+/* contact */
+.contact{display:grid;gap:12px}
+.contact .box{display:grid;gap:3px;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:14px}
+.who{font-size:12px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.cname{font-size:17px;font-weight:800;font-family:var(--display)}
+.phone{font-size:20px;font-weight:800;color:var(--pink-deep);text-decoration:none}
+.mail{font-size:15px;font-weight:600;color:var(--ink);text-decoration:none;overflow-wrap:anywhere}
+.refer{background:var(--ink);color:#fff;border-radius:16px;padding:18px}
+.refer b{display:block;font-family:var(--display);font-size:19px;margin-bottom:6px}
+.refer p{font-size:14.5px;opacity:.9}
+.brands{display:flex;flex-wrap:wrap;gap:7px}
+.brands span{background:var(--bg);border:1px solid var(--line);border-radius:99px;padding:5px 11px;font-size:13px;font-weight:600}
+.dots{display:flex;gap:7px;justify-content:center;padding-top:2px}
+.dots button{width:8px;height:8px;border-radius:50%;background:var(--line);border:0;padding:0;cursor:pointer}
+.dots button[aria-current="true"]{background:var(--pink);width:20px;border-radius:5px}
+.nav{display:flex;justify-content:space-between;gap:10px;padding-top:2px}
+.btn{appearance:none;cursor:pointer;border-radius:99px;font-family:var(--display);font-weight:700;font-size:15px;padding:13px 22px;border:0;flex:1}
+.btn-ghost{background:transparent;color:var(--muted);border:1.5px solid var(--line)}
+.btn-primary{background:var(--pink);color:#fff}
+.btn-primary:hover{background:var(--pink-deep)}
+.btn[disabled]{opacity:.4;cursor:default}
+.fine{font-size:13px;color:var(--muted);line-height:1.4}
+a{color:var(--pink-deep)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<main class="deck" aria-roledescription="carousel" aria-label="ZeroHero plan guide">
+  <div class="topbar"><span class="brand">GloBird Energy</span><span class="count" id="count">1 / 10</span></div>
+  <div class="progress" aria-hidden="true"><span id="bar"></span></div>
+
+  <div class="stage" id="stage">
+
+    <!-- 1: Welcome -->
+    <section class="slide" aria-label="Slide 1">
+      <h1>Your Battery Energy Plan</h1>
+      <p class="lead center"><strong>ZeroHero</strong> is a <strong>set-and-forget</strong> energy plan designed to help you <strong>earn more from your home battery</strong>.</p>
+      <p class="small center">This guide covers all 3 savings, your app choice, signing up and getting your battery scheduled. About 3 minutes.</p>
+      <div class="pill" style="align-self:center">⏱ 10 quick slides</div>
+      <div class="note">Already have your quote email? You can skip ahead — open it any time and tap <strong>Join Now</strong>.</div>
+    </section>
+
+    <!-- 2: Day overview -->
+    <section class="slide" aria-label="Slide 2" hidden>
+      <span class="eyebrow">Your day on ZeroHero</span>
+      <h2>One battery, <span class="hl">four moments</span> a day</h2>
+      <p class="small">All times are your local time. Your battery fills up on cheap or free power, then looks after your home.</p>
+      <div class="day">
+        <div class="slot s-free"><span class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5" fill="#fbae47"/><g stroke="#fbae47" stroke-width="2" stroke-linecap="round"><path d="M12 2v3M12 19v3M4.2 4.2l2 2M17.8 17.8l2 2M2 12h3M19 12h3M4.2 19.8l2-2M17.8 6.2l2-2"/></g></svg></span>
+          <div><span class="when">12pm – 3pm</span><span class="say">Free grid power</span><span class="do">Charge your battery and run big appliances for free.</span></div>
+        </div>
+        <div class="slot s-mid"><span class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="6" fill="#ec008c" opacity=".18"/><path d="M12 2a10 10 0 000 20z" fill="#ec008c"/></svg></span>
+          <div><span class="when">3pm – 4pm</span><span class="say">Solar + battery</span><span class="do">Your solar and battery quietly cover the home — nothing to do.</span></div>
+        </div>
+        <div class="slot s-peak"><span class="ico"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="16" rx="2" fill="#ec008c"/><rect x="9.5" y="5" width="5" height="4" fill="#fde3f2"/></svg></span>
+          <div><span class="when">4pm – 11pm</span><span class="say">Battery power (peak)</span><span class="do">Grid power costs the most now — this is when your battery earns you money.</span></div>
+        </div>
+        <div class="slot s-night"><span class="ico"><svg viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 1110 3a7 7 0 1010 11.5z" fill="#444a7a"/></svg></span>
+          <div><span class="when">11pm – 12pm next day</span><span class="say">Battery power (overnight)</span><span class="do">Your battery carries the home until solar kicks back in.</span></div>
+        </div>
+      </div>
+      <p class="fine">Tip: keep an eye on your battery's output limit (kW) — if several big appliances run together, the extra may still come from the grid.</p>
+    </section>
+
+    <!-- 3: Saving 1 -->
+    <section class="slide" aria-label="Slide 3" hidden>
+      <span class="eyebrow">Saving 1 · Every day</span>
+      <h2><span class="hl">3 hours</span> of free power</h2>
+      <div class="visual">
+        <svg class="clock" viewBox="0 0 160 160"><circle cx="80" cy="80" r="74" fill="#fff8ee" stroke="#f0dbe7" stroke-width="2"/><path d="M80 80 L80 10 A70 70 0 0 1 141 115 Z" fill="#fbae47" opacity=".85"/><circle cx="80" cy="80" r="56" fill="#fff"/><text x="80" y="86" text-anchor="middle" font-family="Rubik,sans-serif" font-size="15" font-weight="800" fill="#8a4f00">12–3pm</text></svg>
+        <div class="timechip">12 PM – 3 PM<small>local time, daily</small></div>
+      </div>
+      <ul class="points">
+        <li><span class="tick"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-10" stroke="#ec008c" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><p>Your battery usually charges from <strong>solar only</strong>. If solar isn't enough, use this window to top it up from the grid <strong>for free</strong>.</p></li>
+        <li><span class="tick"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-10" stroke="#ec008c" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><p>Run the <strong>washing machine, dryer, dishwasher</strong>, hot water, pool pump or charge an <strong>EV</strong> now — any weather.</p></li>
+        <li class="mi"><span class="tick"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-10" stroke="#6f5a66" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><p>Free up to <strong>50 kWh a day</strong>. A small cost applies after that.</p></li>
+      </ul>
+      <span class="pill">Free up to 50 kWh per day</span>
+    </section>
+
+    <!-- 4: Saving 2 -->
+    <section class="slide" aria-label="Slide 4" hidden>
+      <span class="eyebrow">Saving 2 · Every day</span>
+      <h2>Earn a <span class="hl">$1 credit</span> a day</h2>
+      <div class="visual">
+        <svg class="clock" viewBox="0 0 160 160"><circle cx="80" cy="80" r="74" fill="#fde3f2" stroke="#f0dbe7" stroke-width="2"/><path d="M80 80 L80 10 A70 70 0 0 1 141 115 Z" fill="#ec008c" opacity=".9"/><circle cx="80" cy="80" r="56" fill="#fff"/><text x="80" y="86" text-anchor="middle" font-family="Rubik,sans-serif" font-size="15" font-weight="800" fill="#b8006d">6–9pm</text></svg>
+        <div class="timechip">6 PM – 9 PM<small>stay off the grid</small></div>
+      </div>
+      <ul class="points">
+        <li><span class="tick"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-10" stroke="#ec008c" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><p>If your battery covers your <strong>total home usage from 6pm–9pm</strong> (self-consumption mode), we pay you <strong>$1 a day</strong> — up to <strong>$365 a year</strong>.</p></li>
+        <li><span class="tick"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-10" stroke="#ec008c" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><p>A great way to help <strong>offset your daily supply charge</strong>.</p></li>
+        <li class="mi"><span class="tick"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-10" stroke="#6f5a66" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><p>A tiny trickle from the grid is fine — up to <strong>0.03 kWh each hour</strong>.</p></li>
+        <li class="mi"><span class="tick"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-10" stroke="#6f5a66" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><p>Check your battery's app for its <strong>output (kW)</strong> — too many big appliances at once can pull extra from the grid.</p></li>
+      </ul>
+      <span class="pill">Earn up to $365 a year</span>
+    </section>
+
+    <!-- 5: Saving 3 -->
+    <section class="slide" aria-label="Slide 5" hidden>
+      <span class="eyebrow">Saving 3 · Feed-in · Optional</span>
+      <h2><span class="hl">10c/kWh</span> feed-in tariff</h2>
+      <div class="visual">
+        <svg class="clock" viewBox="0 0 160 160"><circle cx="80" cy="80" r="74" fill="#e6f1fb" stroke="#f0dbe7" stroke-width="2"/><path d="M80 80 L80 10 A70 70 0 0 1 141 115 Z" fill="#1f6fb2" opacity=".85"/><circle cx="80" cy="80" r="56" fill="#fff"/><text x="80" y="86" text-anchor="middle" font-family="Rubik,sans-serif" font-size="15" font-weight="800" fill="#1f6fb2">6–9pm</text></svg>
+        <div class="timechip">6 PM – 9 PM<small>sell back to the grid</small></div>
+      </div>
+      <p class="small">You choose how much to sell — keep enough for your own home first.</p>
+      <div class="sch-set" style="background:var(--bg)">
+        <div class="sch-row"><span class="sch-tm">10c</span><span><strong>6pm–9pm:</strong> first 15 kWh/day sold here</span></div>
+        <div class="sch-row"><span class="sch-tm">2c</span><span>4pm–6pm and 9pm–11pm</span></div>
+        <div class="sch-row"><span class="sch-tm">0c</span><span>Daytime — your solar covers the battery instead</span></div>
+      </div>
+      <span class="pill">Earn up to $547.50 a year</span>
+    </section>
+
+    <!-- 6: Bonus critical events -->
+    <section class="slide" aria-label="Slide 6" hidden>
+      <span class="eyebrow">Small bonus</span>
+      <h2>Critical Events <span class="hl">(optional)</span></h2>
+      <p class="lead">On rare days when power prices spike, our app may ask you to sell or charge for about <strong>5 minutes</strong>.</p>
+      <ul class="points">
+        <li><span class="tick"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-10" stroke="#ec008c" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><p>Sell during the event: earn <strong>$1 per kWh</strong>.</p></li>
+        <li><span class="tick"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-10" stroke="#ec008c" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><p>Charge during the event: earn <strong>5c per kWh</strong>.</p></li>
+        <li class="mi"><span class="tick"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-10" stroke="#6f5a66" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><p>It's completely <strong>optional</strong> — ignore the message and nothing happens.</p></li>
+      </ul>
+      <div class="note alt">Only available if you use GloBird's app to manage your battery — see the next slide.</div>
+    </section>
+
+    <!-- 7: App choice -->
+    <section class="slide" aria-label="Slide 7" hidden>
+      <span class="eyebrow">Choosing your app</span>
+      <h2>Manage your battery with <span class="hl">GloBird's app</span> or your own</h2>
+      <p class="small">Same 3 main savings either way — our app just adds a couple of optional extras.</p>
+      <div class="cmp">
+        <div class="cr ch"><span></span><span class="cc">Our app</span><span class="cc">Own app</span></div>
+        <div class="cr"><span>Free power 12–3pm</span><span class="cc">✓</span><span class="cc">✓</span></div>
+        <div class="cr"><span>$1 a day, 6–9pm</span><span class="cc">✓</span><span class="cc">✓</span></div>
+        <div class="cr"><span>10c/kWh feed-in, 6–9pm</span><span class="cc">✓</span><span class="cc">✓</span></div>
+        <div class="cr"><span>We schedule it for you</span><span class="cc">✓</span><span class="cc">–</span></div>
+        <div class="cr cx"><span>Critical Events bonus</span><span class="cc">✓</span><span class="cc">–</span></div>
+        <div class="cr"><span>You stay in full control<small>Self-consumption, Schedule or Auto mode</small></span><span class="cc">✓</span><span class="cc">✓</span></div>
+      </div>
+      <div class="choices">
+        <button class="choice featured" type="button"><em class="rec">Recommended</em><b>GloBird's app</b><span>We configure your schedule for you</span></button>
+        <button class="choice" type="button"><b>My own battery app</b><span>Step-by-step guides for most brands</span></button>
+      </div>
+      <p class="small">ZeroHero works with <strong>any home battery brand</strong>. Brands that can currently use our app:</p>
+      <div class="brands"><span>AlphaESS</span><span>Anker</span><span>FoxESS</span><span>Neovolt</span><span>Redback</span><span>SAJ</span><span>Sigenergy</span><span>SolaX</span><span>Solis+Dyness</span><span>Sungrow</span><span>WHES (eCactus)</span></div>
+      <p class="small">Brand not listed? Choose your own app — you still get the 3 main savings, and we'll let you know if your brand connects in future.</p>
+    </section>
+
+    <!-- 8: Sign up -->
+    <section class="slide" aria-label="Slide 8" hidden>
+      <span class="eyebrow">Almost there</span>
+      <h2>Ready to <span class="hl">sign up</span>?</h2>
+      <ol class="steps">
+        <li><b>Open your quote email</b><span>Look for "Your Quote from GloBird Energy"</span></li>
+        <li><b>Tap Join Now</b><span>Takes just a few minutes</span></li>
+        <li><b>Enter your battery details</b><span>Brand, model and (if needed) serial number</span></li>
+      </ol>
+      <div class="note g"><strong>Switching is easy:</strong> free to join, no lock-in contract, no exit fees, we handle the switch, and your power is never interrupted.</div>
+    </section>
+
+    <!-- 9: Battery scheduling -->
+    <section class="slide" aria-label="Slide 9" hidden>
+      <span class="eyebrow">After you sign up</span>
+      <h2>Set up <span class="hl">battery scheduling</span></h2>
+      <p class="small">Your battery will <strong>not</strong> charge from the grid by itself — it needs to be programmed to use the free power.</p>
+      <div class="sch-set">
+        <span class="sch-h">What to set</span>
+        <div class="sch-row"><span class="sch-tm">12pm–3pm</span><span>Charge from the grid, up to 100%</span></div>
+        <div class="sch-row"><span class="sch-tm">6pm–9pm</span><span>Optional: sell your excess power</span></div>
+      </div>
+      <ol class="steps">
+        <li><b>Using GloBird's app?</b><span>Join the VPP, then watch our short setup video — 3 modes: Self-consumption, Schedule, or Auto</span></li>
+        <li><b>Using your own app?</b><span>Follow our brand guide, or ask your installer or manufacturer</span></li>
+      </ol>
+      <p class="fine">Heavy use overnight can run your battery flat before morning — try to run big loads in the free midday window instead.</p>
+    </section>
+
+    <!-- 10: Contact & referral -->
+    <section class="slide" aria-label="Slide 10" hidden>
+      <h2 class="center">Questions, or know someone who'd save too?</h2>
+      <div class="contact">
+        <div class="box"><span class="who">Customer service</span><span class="cname">GloBird Energy</span><a class="phone" href="tel:133456">133 456</a><a class="mail" href="mailto:cs@globirdenergy.com.au">cs@globirdenergy.com.au</a></div>
+      </div>
+      <div class="refer">
+        <b>You get $50. They get $50.</b>
+        <p>For every friend or family member who joins after you, you get $50 off your bill and they get $50 off theirs. Refer them through your app, by email, or have them call 133 456 and mention your name.</p>
+      </div>
+      <p class="small center">Still not convinced? <a href="https://www.globirdenergy.com.au/energy-saver/zerohero-testimonials/" target="_blank" rel="noopener">Watch customer testimonials →</a></p>
+    </section>
+
+  </div>
+
+  <div class="dots" id="dots" role="tablist" aria-label="Choose slide"></div>
+  <div class="nav">
+    <button class="btn btn-ghost" id="prev" type="button">← Back</button>
+    <button class="btn btn-primary" id="next" type="button">Next</button>
+  </div>
+</main>
+</div>
+<script>
+(function(){
+  var slides=Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var n=slides.length, i=0;
+  var bar=document.getElementById('bar'), count=document.getElementById('count');
+  var dotsWrap=document.getElementById('dots'), prev=document.getElementById('prev'), next=document.getElementById('next');
+  slides.forEach(function(s,idx){
+    var d=document.createElement('button');
+    d.type='button'; d.setAttribute('role','tab'); d.setAttribute('aria-label','Slide '+(idx+1));
+    d.addEventListener('click',function(){go(idx);});
+    dotsWrap.appendChild(d);
+  });
+  function render(dir){
+    slides.forEach(function(s,idx){ s.hidden = idx!==i; });
+    slides[i].classList.remove('enter'); void slides[i].offsetWidth; slides[i].style.setProperty('--dir',(dir||1)*24+'px'); slides[i].classList.add('enter');
+    bar.style.width=((i+1)/n*100)+'%';
+    count.textContent=(i+1)+' / '+n;
+    Array.prototype.forEach.call(dotsWrap.children,function(d,idx){ d.setAttribute('aria-current', idx===i?'true':'false'); });
+    prev.disabled = i===0;
+    next.textContent = i===n-1 ? 'Done' : 'Next';
+    window.scrollTo(0,0);
+  }
+  function go(idx){ var dir = idx>i?1:-1; i=Math.max(0,Math.min(n-1,idx)); render(dir); }
+  prev.addEventListener('click',function(){ if(i>0) go(i-1); });
+  next.addEventListener('click',function(){ if(i<n-1) go(i+1); else go(0); });
+  render(1);
+})();
+</script>
+</body>
+</html>
